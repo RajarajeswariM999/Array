@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 10
+
+// Define the structure for a linked list node
+typedef struct Node {
+    int data;
+    int next;
+} Node;
+
+// Define the linked list structure
+typedef struct LinkedList {
+    Node nodes[MAX_SIZE];
+    int head;
+    int size;
+} LinkedList;
+
+// Function to initialize the linked list
+void initLinkedList(LinkedList* list) {
+    list->head = -1;
+    list->size = 0;
+}
+
+// Function to add a node to the end of the linked list
+void addNode(LinkedList* list, int data) {
+    if (list->size < MAX_SIZE) {
+        int newNode = list->size;
+        list->nodes[newNode].data = data;
+        list->nodes[newNode].next = -1;
+
+        if (list->head == -1) {
+            list->head = newNode;
+        } else {
+            int current = list->head;
+            while (list->nodes[current].next != -1) {
+                current = list->nodes[current].next;
+            }
+            list->nodes[current].next = newNode;
+        }
+
+        list->size++;
+    }
+}
+
+// Function to print the linked list
+void printList(LinkedList* list) {
+    int current = list->head;
+    while (current != -1) {
+        printf("%d -> ", list->nodes[current].data);
+        current = list->nodes[current].next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    LinkedList list;
+    initLinkedList(&list);
+
+    addNode(&list, 10);
+    addNode(&list, 20);
+    addNode(&list, 30);
+
+    printList(&list);
+
+    return 0;
+}
